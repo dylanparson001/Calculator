@@ -1,0 +1,129 @@
+:root{
+    --button-margin: 0.3em;
+    --button-radius: 25px;
+}
+
+body{
+    background-color: rgb(59, 59, 59);
+}
+h1{
+    margin: auto;
+    text-align: center;
+    color: rgb(98, 203, 230);
+}
+
+.calculator{
+    background-color:rgba(98, 203, 230, 0.7);
+    width: 30%;
+    height: 450px;
+    padding: 1em;
+    border-style: solid;
+    border-color: black;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+
+}
+.display{
+    text-align: right;
+    border: black;
+    border-style: solid;
+    flex: 0 1 auto;
+    font-size: 2rem;
+    padding: 0.4em;
+    border-radius: 25px;
+}
+.buttons{
+    height:100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-areas:
+        "clear clear clear divide"
+        "seven eight nine multiply"
+        "four five six minus"
+        "one two three plus"
+        "zer zer equal equal";
+}
+
+#clear{
+    grid-area: clear;
+    margin: var(--button-margin);
+    border-radius: var(--button-radius);
+    
+}
+#divide{
+    grid-area: divide;
+    margin: var(--button-margin);
+    border-radius: var(--button-radius);
+}
+#seven{
+    grid-area: seven;
+    margin: var(--button-margin);
+    border-radius: var(--button-radius);
+}
+#eight{
+    grid-area: eight;
+    margin: var(--button-margin);
+    border-radius: var(--button-radius);
+}
+#nine{
+    grid-area: nine;
+    margin: var(--button-margin);
+    border-radius: var(--button-radius);
+}
+#multiply{
+    grid-area: multiply;
+    margin: var(--button-margin);
+    border-radius: var(--button-radius);
+}
+#four{
+    grid-area: four;
+    margin: var(--button-margin);
+    border-radius: var(--button-radius);
+}
+#five{
+    grid-area: five;
+    margin: var(--button-margin);
+    border-radius: var(--button-radius);
+}
+#six{
+    grid-area: six;
+    margin: var(--button-margin);
+    border-radius: var(--button-radius);
+}
+#minus{
+    grid-area: minus;
+    margin: var(--button-margin);
+    border-radius: var(--button-radius);
+}
+#one{
+    grid-area: one;
+    margin: var(--button-margin);
+    border-radius: var(--button-radius);
+}
+#two{
+    grid-area: two;
+    margin: var(--button-margin);
+    border-radius: var(--button-radius);
+}
+#three{
+    grid-area: three;
+    margin: var(--button-margin);
+    border-radius: var(--button-radius);
+}
+#plus{
+    grid-area: plus;
+    margin: var(--button-margin);
+    border-radius: var(--button-radius);
+}
+#zero{
+    grid-area: zer;
+    margin: var(--button-margin);
+    border-radius: var(--button-radius);
+}
+#equal{
+    grid-area: equal;
+    margin: var(--button-margin);
+    border-radius: var(--button-radius);
+}
