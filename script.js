@@ -6,20 +6,39 @@
 const numberButtons = document.querySelectorAll(".number"); //nodelist of number buttons
 const operatorButtons = document.querySelectorAll(".operator");
 const display = document.querySelector(".display");
+const equals = document.querySelector("#equal");
+
 let result = 0;
 let firstNum = [];
+let secondNum = [];
 let displayValue;
+let chosenOperation = false;
 let operator;
 
 //iterates through nodelist and adds event listener for each button
 numberButtons.forEach((item) => {
   item.addEventListener("click", () => {
-    firstNum.push(item.value);
-    displayValue = firstNum.join("");
-    display.textContent = displayValue;
+    if (chosenOperation === false) {
+      firstNum.push(item.value); //adds most recent button push to end of array
+      display.textContent = firstNum.join(""); // assigns final number to the display value
+    } else {
+      secondNum.push(item.value);
+      display.textContent = secondNum.join("");
+    }
   });
 });
 
+operatorButtons.forEach((item) => {
+  item.addEventListener("click", () => {
+    chosenOperation = true;
+    operator = item.value;
+    display.textContent = operator;
+  });
+});
+
+equals.addEventListener("click", ()=>{
+  display.textContent = operate(firstNum, secondNum, operator); 
+});
 
 //functions
 function add(firstNum, secondNum) {
@@ -42,20 +61,20 @@ function divide(firstNum, secondNum) {
   }
   return firstNum / secondNum;
 }
-
-function operate(firstNum, secondNum, operator) {
+//need to reconfigure with arrays
+function operate(firstNum, secondNum, operator) { 
   //takes two numbers and an operator, then performs function associated with operator
   switch (operator) {
-    case "add":
+    case "+":
       return add(firstNum, secondNum);
 
-    case "subtract":
+    case "-":
       return subtract(firstNum, secondNum);
 
-    case "multiply":
+    case "x":
       return multiply(firstNum, secondNum);
 
-    case "divide":
+    case "÷":
       return divide(firstNum, secondNum);
   }
 }
