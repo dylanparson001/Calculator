@@ -1,12 +1,12 @@
-// check if result === 0
-// take input from "number" buttons
-// store input in array, when operator button is clicked, join the array into one number
-// example: user enters 1234, store in array as result [1, 2, 3, 4] then bring together as 1234 when operator is clicked
+/* Author: Dylan Parson
+   Purpose: Calculator web app */
 
+//functions
 const numberButtons = document.querySelectorAll(".number"); //nodelist of number buttons
 const operatorButtons = document.querySelectorAll(".operator");
 const display = document.querySelector(".display");
 const equals = document.querySelector("#equal");
+const clear = document.querySelector("#clear");
 
 let result = 0;
 let firstNum = [];
@@ -15,10 +15,10 @@ let displayValue;
 let chosenOperation = false;
 let operator;
 
-//iterates through nodelist and adds event listener for each button
+//event listeners for number buttons
 numberButtons.forEach((item) => {
   item.addEventListener("click", () => {
-    if (chosenOperation === false) {
+    if (chosenOperation == false) {
       firstNum.push(item.value); //adds most recent button push to end of array
       display.textContent = firstNum.join(""); // assigns final number to the display value
     } else {
@@ -28,6 +28,7 @@ numberButtons.forEach((item) => {
   });
 });
 
+// event listeners for operation buttons
 operatorButtons.forEach((item) => {
   item.addEventListener("click", () => {
     chosenOperation = true;
@@ -36,34 +37,18 @@ operatorButtons.forEach((item) => {
   });
 });
 
-equals.addEventListener("click", ()=>{
-  display.textContent = operate(firstNum, secondNum, operator); 
+//event listener for equals buttons
+equals.addEventListener("click", () => {
+  result = operate(firstNum, secondNum, operator);
+  display.textContent = result;
 });
 
-//functions
-function add(firstNum, secondNum) {
-  return firstNum + secondNum;
-}
+clear.addEventListener("click", () =>{
 
-function subtract(firstNum, secondNum) {
-  return firstNum - secondNum;
-}
+})
 
-function multiply(firstNum, secondNum) {
-  return firstNum * secondNum;
-}
-
-function divide(firstNum, secondNum) {
-  //cannot divide by zero
-  if (firstNum === 0) {
-    console.log("nah");
-    return null;
-  }
-  return firstNum / secondNum;
-}
-//need to reconfigure with arrays
-function operate(firstNum, secondNum, operator) { 
-  //takes two numbers and an operator, then performs function associated with operator
+//operations 
+function operate(firstNum, secondNum, operator) {
   switch (operator) {
     case "+":
       return add(firstNum, secondNum);
@@ -78,3 +63,19 @@ function operate(firstNum, secondNum, operator) {
       return divide(firstNum, secondNum);
   }
 }
+
+function add(firstNum, secondNum) {
+  let fNum = firstNum.reduce((accumulator, value) => accumulator + value); // reduce returns values as a string
+  let sNum = secondNum.reduce((accumulator, value) => accumulator + value);
+  console.log(firstNum);
+  console.log(secondNum);
+  fNum = parseInt(fNum); // need to convert to number to add properly
+  sNum = parseInt(sNum);
+  return fNum + sNum;
+}
+
+function subtract(firstNum, secondNum) {}
+
+function multiply(firstNum, secondNum) {}
+
+function divide(firstNum, secondNum) {}
