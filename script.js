@@ -1,81 +1,114 @@
 /* Author: Dylan Parson
    Purpose: Calculator web app */
 
-//functions
 const numberButtons = document.querySelectorAll(".number"); //nodelist of number buttons
 const operatorButtons = document.querySelectorAll(".operator");
 const display = document.querySelector(".display");
 const equals = document.querySelector("#equal");
 const clear = document.querySelector("#clear");
 
-let result = 0;
-let firstNum = [];
-let secondNum = [];
-let displayValue;
+let firstNum = "";
+let secondNum = "";
+let result = "";
 let chosenOperation = false;
-let operator;
+let previousKey = "";
+let displayValue = "0";
 
-//event listeners for number buttons
+//NUMBER buttons
 numberButtons.forEach((item) => {
   item.addEventListener("click", () => {
-    if (chosenOperation == false) {
-      firstNum.push(item.value); //adds most recent button push to end of array
-      display.textContent = firstNum.join(""); // assigns final number to the display value
-    } else {
-      secondNum.push(item.value);
-      display.textContent = secondNum.join("");
+    if (displayValue === "0" || result === "0") {// first time button is pressed
+      displayValue = item.value;
+      display.textContent = displayValue;
+      firstNum = displayValue;
+      previousKey = item.getAttribute("class"); // need to see what type of button pressed
+    } else if (chosenOperation === false) { // after first button press, before operator button is pressed
+      displayValue += item.value; // adds onto existing value
+      display.textContent = displayValue;
+      firstNum = displayValue;
+      previousKey = item.getAttribute("class");
+    } else if (previousKey === "operator") { // first button after operator
+      if (result != "") {
+        firstNum = result;
+      }
+      displayValue = item.value;
+      secondNum = displayValue;
+      display.textContent = displayValue;
+      previousKey = item.getAttribute("class");
+    } else { // every button after operator until equals button
+      displayValue += item.value;
+      secondNum = displayValue;
+      display.textContent = displayValue;
+      previousKey = item.getAttribute("class");
     }
   });
 });
-
-// event listeners for operation buttons
+// OPERATION buttons
 operatorButtons.forEach((item) => {
   item.addEventListener("click", () => {
     chosenOperation = true;
     operator = item.value;
+    previousKey = item.getAttribute("class");
     display.textContent = operator;
   });
 });
 
-//event listener for equals buttons
+//EQUALS button
 equals.addEventListener("click", () => {
-  result = operate(firstNum, secondNum, operator);
-  display.textContent = result;
-});
-
-clear.addEventListener("click", () =>{
-
-})
-
-//operations 
-function operate(firstNum, secondNum, operator) {
+  chosenOperation = false;
   switch (operator) {
     case "+":
-      return add(firstNum, secondNum);
-
+      result = add(firstNum, secondNum);
+      display.textContent = result;
+      
+      break;
     case "-":
-      return subtract(firstNum, secondNum);
-
+      result = subtract(firstNum, secondNum);
+      display.textContent = result;
+      break;
     case "x":
-      return multiply(firstNum, secondNum);
-
+      result = multiply(firstNum, secondNum);
+      display.textContent = result;
+      break;
     case "÷":
-      return divide(firstNum, secondNum);
+      result = divide(firstNum, secondNum);
+      display.textContent = result;
+      break;
   }
-}
+});
 
+// CLEAR button
+clear.addEventListener("click", () => {
+  firstNum = "";
+  secondNum = "";
+  result = "";
+  chosenOperation = false;
+  displayValue = "0";
+  display.textContent = displayValue;
+});
+
+//OPERATION functions
 function add(firstNum, secondNum) {
-  let fNum = firstNum.reduce((accumulator, value) => accumulator + value); // reduce returns values as a string
-  let sNum = secondNum.reduce((accumulator, value) => accumulator + value);
-  console.log(firstNum);
-  console.log(secondNum);
-  fNum = parseInt(fNum); // need to convert to number to add properly
-  sNum = parseInt(sNum);
-  return fNum + sNum;
+  let fNum = parseFloat(firstNum);
+  let sNum = parseFloat(secondNum);
+  let result = fNum + sNum;
+  toString(result);
+  return result;
 }
 
-function subtract(firstNum, secondNum) {}
-
-function multiply(firstNum, secondNum) {}
-
-function divide(firstNum, secondNum) {}
+function subtract(firstNum, secondNum){
+  let fNum = parseFloat(firstNum);
+  let sNum = parseFloat(secondNum);
+  return fNum - sNum;
+}
+function multiply(firstNum, secondNum){
+  let fNum = parseFloat(firstNum);
+  let sNum = parseFloat(secondNum);
+  return fNum * sNum;
+}
+function divide(firstNum, secondNum){
+  let fNum = parseFloat(firstNum);
+  let sNum = parseFloat(secondNum);
+  
+  return fNum / sNum;
+}
