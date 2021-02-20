@@ -17,25 +17,26 @@ let displayValue = "0";
 //NUMBER buttons
 numberButtons.forEach((item) => {
   item.addEventListener("click", () => {
-    if (displayValue === "0" || result === "0") {// first time button is pressed
+    if (displayValue === "0") {
+      // first time button is pressed
       displayValue = item.value;
       display.textContent = displayValue;
       firstNum = displayValue;
-      previousKey = item.getAttribute("class"); // need to see what type of button pressed
-    } else if (chosenOperation === false) { // after first button press, before operator button is pressed
+      previousKey = item.getAttribute("class"); 
+    } else if (chosenOperation === false) { // user has not entered an operator yet
       displayValue += item.value; // adds onto existing value
       display.textContent = displayValue;
       firstNum = displayValue;
       previousKey = item.getAttribute("class");
-    } else if (previousKey === "operator") { // first button after operator
-      if (result != "") {
+    } else if (previousKey === "operator") { // user has pressed operator key, putting value in secondNum, replaces display
+      if (result != "") { // if there has been an operation, use previous result as the firstNum
         firstNum = result;
       }
       displayValue = item.value;
       secondNum = displayValue;
       display.textContent = displayValue;
       previousKey = item.getAttribute("class");
-    } else { // every button after operator until equals button
+    } else { // every button after operator until equals button, adds onto display
       displayValue += item.value;
       secondNum = displayValue;
       display.textContent = displayValue;
@@ -55,37 +56,48 @@ operatorButtons.forEach((item) => {
 
 //EQUALS button
 equals.addEventListener("click", () => {
-  chosenOperation = false;
+  if(previousKey === "equal"){
+    firstNum = result;
+  }
   switch (operator) {
     case "+":
-      result = add(firstNum, secondNum);
+      result= add(firstNum, secondNum);
+      result = result.toString(); // change values2 to string to keep up with logic for the number buttons
       display.textContent = result;
-      
       break;
     case "-":
       result = subtract(firstNum, secondNum);
+      result = result.toString();
       display.textContent = result;
       break;
     case "x":
       result = multiply(firstNum, secondNum);
+      result = result.toString();
       display.textContent = result;
       break;
     case "÷":
       result = divide(firstNum, secondNum);
+      result = result.toString();
       display.textContent = result;
       break;
   }
+  previousKey = equals.getAttribute("class");
+  chosenOperation = false;
 });
 
 // CLEAR button
 clear.addEventListener("click", () => {
+  clears();
+});
+
+function clears(){
   firstNum = "";
   secondNum = "";
   result = "";
   chosenOperation = false;
   displayValue = "0";
   display.textContent = displayValue;
-});
+}
 
 //OPERATION functions
 function add(firstNum, secondNum) {
@@ -96,19 +108,23 @@ function add(firstNum, secondNum) {
   return result;
 }
 
-function subtract(firstNum, secondNum){
+function subtract(firstNum, secondNum) {
   let fNum = parseFloat(firstNum);
   let sNum = parseFloat(secondNum);
   return fNum - sNum;
 }
-function multiply(firstNum, secondNum){
+function multiply(firstNum, secondNum) {
   let fNum = parseFloat(firstNum);
   let sNum = parseFloat(secondNum);
   return fNum * sNum;
 }
-function divide(firstNum, secondNum){
+function divide(firstNum, secondNum) {
+  let snarkyMessage = "you stinker";
   let fNum = parseFloat(firstNum);
   let sNum = parseFloat(secondNum);
-  
+  if(sNum === 0){
+    return snarkyMessage
+  }
+
   return fNum / sNum;
 }
