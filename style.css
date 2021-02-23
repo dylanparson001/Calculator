@@ -1,6 +1,5 @@
 /* Author: Dylan Parson
    Purpose: Calculator web app */
-   
 :root{
     --button-margin: 0.3em;
     --button-radius: 5px;
@@ -9,7 +8,7 @@
 }
 
 body{
-    background-color: rgb(59, 59, 59);
+    background-color: rgb(9, 26, 102);
 }
 h1{
     margin: auto;
@@ -19,7 +18,7 @@ h1{
 
 .calculator{
     background-color:rgb(63, 53, 53);
-    width: 38%;
+    width: 30%;
     height: 450px;
     padding: 0.5em;
     border-style: solid;
@@ -29,7 +28,7 @@ h1{
     margin: auto;
 
 }
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 600px) {
     .calculator{
         width: 90%;
     }
@@ -51,11 +50,29 @@ h1{
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(5, 1fr);
     grid-template-areas:
-        "clear clear clear divide"
+        "clear clear backspace divide"
         "seven eight nine multiply"
         "four five six minus"
         "one two three plus"
         "zer zer decimal equal";
+}
+.backspace{
+    grid-area: backspace;
+    background-color: rgb(255,255,255);
+    color: black;
+    margin: var(--button-margin);
+    box-shadow: 2px 2px;
+}
+.backspace:hover{
+    transform: scale(1.1);
+}
+.decimal{
+    background-color: var(--number-color);
+    color: black;
+    box-shadow: 2px 2px;
+}
+.decimal:hover{
+    transform: scale(1.1);
 }
 .equal{
     background-color: rgb(255, 255, 255);
